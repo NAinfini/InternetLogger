@@ -31,16 +31,25 @@ namespace InternetLogger
 
         public void printConsole()
         {
-            itemsToPrint[0] = "         Time:" + currentTime + emptyString;
-            itemsToPrint[1] = "         Internet status:" + internetStatus + emptyString;
-            itemsToPrint[2] = "         Ping Google: " + resultFromGoogle + emptyString;
-            itemsToPrint[3] = "         Ping Rogers: " + resultFromRogers + emptyString;
-            itemsToPrint[4] = "         Ping Router: " + resultFromRouter + emptyString;
-            for(int i=0;i<itemsToPrint.Length;i++) 
+            try
             {
-                Console.SetCursorPosition(0, i + 1);
-                Console.Write(itemsToPrint[i]);
+                itemsToPrint[0] = "         Time:" + currentTime + emptyString;
+                itemsToPrint[1] = "         Internet status:" + internetStatus + emptyString;
+                itemsToPrint[2] = "         Ping Google: " + resultFromGoogle + emptyString;
+                itemsToPrint[3] = "         Ping Rogers: " + resultFromRogers + emptyString;
+                itemsToPrint[4] = "         Ping Router: " + resultFromRouter + emptyString;
+                for (int i = 0; i < itemsToPrint.Length; i++)
+                {
+                    Console.SetCursorPosition(0, i + 1);
+                    Console.Write(itemsToPrint[i]);
+                }
             }
+            catch(Exception e)
+            {
+                Console.SetCursorPosition(0, 10);
+                Console.WriteLine(e.ToString());
+            }
+            
 
         }
     }

@@ -47,14 +47,16 @@ namespace InternetLogger
                 }
 
                 if(pastStatus ^ currentStatus) {
-                    FM.addToFIle(currentTime.ToString("yyyy.MM.dd") + ".txt", currentTime.ToString("[yyyy.MM.dd HH:mm:ss]") + 
+                    FM.addToFIle(currentTime.ToString("yyyy.MM.dd") + ".txt", currentTime.ToString("[yyyy.MM.dd HH:mm:ss]") +
                         ", Google: " + pingGoogle.Status.ToString() +
                         ", Rogers: " + pingRogers.Status.ToString() +
                         ", Router: " + pingRogers.Status.ToString() +
                         ", Lasted for: " + (currentTime - switchTime).TotalSeconds.ToString() + " seconds");
                     switchTime = currentTime;
                 }
+
                 printOnConsole.printConsole();
+
                 if (!currentStatus)
                 {
                     Thread.Sleep(1000);

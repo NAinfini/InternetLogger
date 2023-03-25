@@ -24,9 +24,10 @@ namespace InternetLogger
                     st.WriteLine(line);
                 }
             }
-            catch (Exception Ex)
+            catch (Exception e)
             {
-                Console.WriteLine(Ex.ToString());
+                Console.SetCursorPosition(0, 10);
+                Console.WriteLine(e.ToString());
             }
 
         }
