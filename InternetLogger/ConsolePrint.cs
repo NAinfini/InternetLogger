@@ -31,7 +31,7 @@ namespace InternetLogger
 
         public void printConsole()
         {
-            itemsToPrint[0] = "         Time:"+currentTime + emptyString;
+            itemsToPrint[0] = "         Time:" + currentTime + emptyString;
             itemsToPrint[1] = "         Internet status:" + internetStatus + emptyString;
             itemsToPrint[2] = "         Ping Google: " + resultFromGoogle + emptyString;
             itemsToPrint[3] = "         Ping Rogers: " + resultFromRogers + emptyString;

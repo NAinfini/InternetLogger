@@ -5,6 +5,7 @@ using System.Net.NetworkInformation;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace InternetLogger
 {
@@ -26,12 +27,15 @@ namespace InternetLogger
             {
                 currentTime = DateTime.Now;
                 printOnConsole.currentTime = currentTime.ToString();
+
                 PingReply pingGoogle = ping.Send(IPAddress.Parse("8.8.8.8"));
                 PingReply pingRogers = ping.Send(IPAddress.Parse("4.2.2.2"));
                 PingReply pingRouter = ping.Send(IPAddress.Parse("1.1.1.1"));
+
                 googleConnected = (printOnConsole.resultFromGoogle = pingGoogle.Status) ==  IPStatus.Success;
-                rogersConnected = (printOnConsole.resultFromRogers = pingRogers.Status) == IPStatus.Success;
+                rogersConnected = (printOnConsole.resultFromRogers = pingRogers.Status) ==  IPStatus.Success;
                 routerConnected = (printOnConsole.resultFromRouter = pingRouter.Status) ==  IPStatus.Success;
+
                 Boolean pastStatus = currentStatus;
                 if(currentStatus = (googleConnected || rogersConnected || routerConnected))
                 {
@@ -41,10 +45,13 @@ namespace InternetLogger
                 {
                     printOnConsole.internetStatus = "Disconnected";
                 }
+
                 if(pastStatus ^ currentStatus) {
-                    FM.addToFIle(currentTime.ToString("yyyy.MM.dd")+".txt", currentTime.ToString("[yyyy.MM.dd HH:mm:ss]")+ " Google: " +
-                        pingGoogle.Status.ToString()+", Rogers: "+pingRogers.Status.ToString()+", Router: " 
-                        + pingRogers.Status.ToString()+", Lasted for: " + (currentTime - switchTime).TotalSeconds.ToString()+" seconds");
+                    FM.addToFIle(currentTime.ToString("yyyy.MM.dd") + ".txt", currentTime.ToString("[yyyy.MM.dd HH:mm:ss]") + 
+                        ", Google: " + pingGoogle.Status.ToString() +
+                        ", Rogers: " + pingRogers.Status.ToString() +
+                        ", Router: " + pingRogers.Status.ToString() +
+                        ", Lasted for: " + (currentTime - switchTime).TotalSeconds.ToString() + " seconds");
                     switchTime = currentTime;
                 }
                 printOnConsole.printConsole();
@@ -60,6 +67,22 @@ namespace InternetLogger
             }
         }
 
-        
+        private  bool CheckForInternetConnection(int timeoutMs = 10000, string url = null)
+        {
+            try
+            {
+                var request = (HttpWebRequest)WebRequest.Create(url);
+                request.KeepAlive = false;
+                request.Timeout = timeoutMs;
+                using (var response = (HttpWebResponse)request.GetResponse())
+                    return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+
     }
 }
